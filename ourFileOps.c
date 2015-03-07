@@ -38,7 +38,7 @@ RETURN VALUE
      return -1;
   }
 
-  if(strcmp("\\ourtest.txt", path) == 0)
+  if(strcmp("/ourtest.txt", path) == 0)
   {
     printf("In our file, \n");
     int localFd = (*original_open)(path, flags);
@@ -75,8 +75,7 @@ RETURN VALUE
        
        Manual page read(2) line 1 (press h for help or q to quit)
 */
-  fprintf(stderr,"\nread fd buf count: %x, %p, %zd\n"
-	  , fd, buf, count);
+//  fprintf(stderr,"\nread fd buf count: %x, %p, %zd\n", fd, buf, count);
    ssize_t (*ourOriginal_read)(int, void*, size_t);
    ourOriginal_read = dlsym(RTLD_NEXT, "read");
    char* err = NULL;
@@ -85,6 +84,7 @@ RETURN VALUE
       fprintf(stderr, "%s\n",err);
       return -1;
    }
+
    if(fd >= 10000){
      //Host File Descriptor
      fprintf(stderr,"\n In Host file descriptor\n");
@@ -146,21 +146,21 @@ SYNOPSIS
 int close(int fd);
 
 DESCRIPTION
-close()  closes  a  file descriptor, so that it no longer refers to
+  close()  closes  a  file descriptor, so that it no longer refers to
   any file and may be reused.  Any record locks (see  fcntl(2))  held
   on  the  file it was associated with, and owned by the process, are
   removed (regardless of the file descriptor that was used to  obtain
-	   the lock).
+  the lock).
 
-       If  fd is the last file descriptor referring to the underlying open
+  If  fd is the last file descriptor referring to the underlying open
   file description (see open(2)), the resources associated  with  the
   open  file  description  are  freed; if the descriptor was the last
   reference to a file which has been removed using unlink(2) the file
-       is deleted.
+  is deleted.
 
 RETURN VALUE
-    close()  returns  zero  on  success.  On error, -1 is returned, and
-       errno is set appropriately.
+  close()  returns  zero  on  success.  On error, -1 is returned, and
+  errno is set appropriately.
 */
  
   fprintf(stderr,"close fd %d\n", fd);
